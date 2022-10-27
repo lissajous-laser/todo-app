@@ -16,92 +16,9 @@ const MOBILE_BREAK_POINT = 540;
 const TABLET_BREAK_POINT = 960;
 const CHARACTER_LIMIT = 36;
 
-function App() {
-  return (
-    <Provider store={store}>
-      <Background />
-    </Provider>
+/* REDUX PARTS */
 
-  );
-}
-
-function Background() {
-  const darkMode = useSelector(selectDarkMode);
-
-
-  const [windowWidth, setWindowWidth] =
-    useState(window.innerWidth);
-
-  useEffect(() => {
-    window.addEventListener(
-      'resize',
-      () => setWindowWidth(window.innerWidth)
-    );
-    return () => {
-      window.removeEventListener(
-        'resize',
-        () => setWindowWidth(window.innerWidth)
-      )
-    }
-  });
-
-  function backgroundStyle() {
-    if (windowWidth > SML_BG_BREAK_POINT) {
-      if (darkMode) {
-        return {style: {
-          backgroundImage: `url(${bgDesktopDark})`,
-          maxWidth: 1440,
-          backgroundPosition: '35% 0%'
-        }};
-      } else {
-        return {style: {
-          backgroundImage: `url(${bgDesktopLight})`,
-          maxWidth: 1440,
-          backgroundPosition: '35% 0%'
-        }};
-      }
-    } else if (windowWidth <= SML_BG_BREAK_POINT) {
-      if (darkMode) {
-        return {style: {backgroundImage: `url(${bgMobileDark})`}};
-      } else {
-        return {style: {backgroundImage: `url(${bgMobileLight})`}}
-      }
-    }
-  }
-
-  return (
-    <div {...darkMode && {className: 'dark'}}>
-      <div
-        className="flex justify-center h-screen w-screen border
-          bg-very-light-gray dark:bg-very-dark-blue"
-        style={{fontFamily: 'Josefin Sans'}}
-      >
-        <main 
-          className=" w-full flex justify-center no bg-no-repeat"
-          {...backgroundStyle()}
-        >
-          <div className="mt-10 xs:mt-20 w-10/12 md:w-132">
-            <Header/>
-            <NewTaskEditor/>
-            <div
-              className="rounded shadow-lg dark:shadow-2xl bg-white
-                dark:bg-very-dark-desaturated-blue"
-              >
-              <List windowWidth={windowWidth}/>
-              <MenuBar windowWidth={windowWidth}/>
-            </div>
-            {windowWidth < MOBILE_BREAK_POINT && <div 
-              className="rounded shadow-lg dark:shadow-2xl mt-6
-                text-dark-grayish-blue h-12 flex content-center
-                justify-center bg-white dark:bg-very-dark-desaturated-blue
-                dark:text-very-dark-grayish-blue-dark-mode-1 "
-            ><Filters/></div>}
-          </div>
-        </main>    
-      </div>
-    </div>
-  )
-}
+// state type
 
 type State = {
   todoList: Task[],
@@ -111,6 +28,8 @@ type State = {
   isMobileSize: boolean
   windowWidth: number
 }
+
+// action types
 
 type Task = {
   id: number,
@@ -133,6 +52,8 @@ enum ListDisplayMode {
   Active = 'ACTIVE',
   Completed = 'COMPLETED'
 }
+
+// Reducers and Action Creators
 
 const sampleTasks: Task[] = [
   {id: 0, isComplete: false, text: 'mow lawn'},
@@ -265,6 +186,8 @@ const toggleCompleteNewTask = (): Action<string> => ({
   type: 'newTask/toggleComplete'
 });
 
+// Store
+
 const store = configureStore({
   reducer: {
     todoList: todoReducer,
@@ -274,12 +197,103 @@ const store = configureStore({
   }
 });
 
+// Selectors
 
 const selectTodoList = (state: State) => state.todoList;
 const selectDarkMode = (state: State) => state.darkMode;
 const selectListDisplayMode = (state: State) => state.listDisplayMode;
 const selectNewTask = (state: State) => state.newTask;
 
+/* COMPONENTS */
+
+function App() {
+  return (
+    <Provider store={store}>
+      <Background />
+    </Provider>
+
+  );
+}
+ 
+function Background() {
+  const darkMode = useSelector(selectDarkMode);
+
+
+  const [windowWidth, setWindowWidth] =
+    useState(window.innerWidth);
+
+  useEffect(() => {
+    window.addEventListener(
+      'resize',
+      () => setWindowWidth(window.innerWidth)
+    );
+    return () => {
+      window.removeEventListener(
+        'resize',
+        () => setWindowWidth(window.innerWidth)
+      )
+    }
+  });
+
+  function backgroundStyle() {
+    if (windowWidth > SML_BG_BREAK_POINT) {
+      if (darkMode) {
+        return {style: {
+          backgroundImage: `url(${bgDesktopDark})`,
+          maxWidth: 1440,
+          backgroundPosition: '35% 0%'
+        }};
+      } else {
+        return {style: {
+          backgroundImage: `url(${bgDesktopLight})`,
+          maxWidth: 1440,
+          backgroundPosition: '35% 0%'
+        }};
+      }
+    } else if (windowWidth <= SML_BG_BREAK_POINT) {
+      if (darkMode) {
+        return {style: {backgroundImage: `url(${bgMobileDark})`}};
+      } else {
+        return {style: {backgroundImage: `url(${bgMobileLight})`}}
+      }
+    }
+  }
+
+  return (
+    <div {...darkMode && {className: 'dark'}}>
+      <div
+        className="flex justify-center h-screen w-screen border
+          bg-very-light-gray dark:bg-very-dark-blue"
+        style={{fontFamily: 'Josefin Sans'}}
+      >
+        <main 
+          className=" w-full flex justify-center no bg-no-repeat"
+          {...backgroundStyle()}
+        >
+          <div className="mt-10 xs:mt-20 w-10/12 md:w-132">
+            <Header/>
+            <NewTaskEditor/>
+            <div
+              className="rounded shadow-lg dark:shadow-2xl bg-white
+                dark:bg-very-dark-desaturated-blue"
+              >
+              <List windowWidth={windowWidth}/>
+              <MenuBar windowWidth={windowWidth}/>
+            </div>
+            {windowWidth < MOBILE_BREAK_POINT && <div 
+              className="rounded shadow-lg dark:shadow-2xl mt-6
+                text-dark-grayish-blue h-12 flex content-center
+                justify-center bg-white dark:bg-very-dark-desaturated-blue
+                dark:text-very-dark-grayish-blue-dark-mode-1 "
+            ><Filters/></div>}
+          </div>
+        </main>    
+      </div>
+    </div>
+  )
+}
+
+// Renders the list.
 function List(props: {windowWidth: number}) {
   const todoList = useSelector(selectTodoList);
   const listDisplayMode = useSelector(selectListDisplayMode);
@@ -300,6 +314,7 @@ function List(props: {windowWidth: number}) {
   );
 }
 
+// Renders list items, competed buttons and delete buttons.
 function ListItem(props: {task: Task, windowWidth: number}) {
   const dispatch = useDispatch();
   const [hover, setHover] = useState(false);
@@ -369,6 +384,7 @@ function ListItem(props: {task: Task, windowWidth: number}) {
   );
 }
 
+// Input area for new tasks.
 function NewTaskEditor() {
   const newTask = useSelector(selectNewTask);
   const todoList = useSelector(selectTodoList);
@@ -448,6 +464,8 @@ function NewTaskEditor() {
   );
 } 
 
+// Menubar containing tasks completed, filters (on desktop), and
+// Clear Completed button
 function MenuBar(props: {windowWidth: number}) {
   const todoList = useSelector(selectTodoList);
   const dispatch = useDispatch();
@@ -477,6 +495,7 @@ function MenuBar(props: {windowWidth: number}) {
   );
 }
 
+// Filters all, active and completed tasks.
 function Filters() {
   const dispatch = useDispatch();
   const listDisplayMode = useSelector(selectListDisplayMode);
@@ -514,6 +533,7 @@ function Filters() {
   )
 }
 
+// Contains heading and dark mode button.
 function Header() {
   const dispatch = useDispatch();
   const darkMode = useSelector(selectDarkMode);
