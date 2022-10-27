@@ -355,7 +355,7 @@ function ListItem(props: {task: Task, windowWidth: number}) {
 
   return (
     <li
-      className="flex items-center px-6 py-3 sm:py-4 gap-6 text-sm
+      className="flex items-center px-5 sm:px-6 py-3 sm:py-4 gap-5 sm:gap-6 text-sm
         sm:text-lg border-b border-light-grayish-blue 
         text-very-dark-grayish-blue
         dark:border-very-dark-grayish-blue-dark-mode-2
@@ -432,8 +432,9 @@ function NewTaskEditor() {
 
   return (
   <div 
-    className="h-12 sm:h-16 rounded flex items-center p-6 mt-8 mb-4 sm:mb-8
-      gap-6 text-sm sm:text-lg bg-white dark:bg-very-dark-desaturated-blue"
+    className="h-12 sm:h-16 rounded flex items-center p-5 sm:p-6 mt-8 mb-4 
+      sm:mb-8 gap-5 sm:gap-6 text-sm sm:text-lg bg-white 
+    dark:bg-very-dark-desaturated-blue"
   >
     <button
       {...buttonStyle(newTask)}
