@@ -34,6 +34,28 @@ module.exports = {
         '6minus': '1.4rem',
         '132':  '530px'
       },
+      animation: {
+        'lightToDark': 'lightToDark 0.15s linear',
+        'darkToLight': 'darkToLight 0.15s linear',
+      },
+      keyframes: {
+        lightToDark: {
+          '0%': {
+            'background-color': 'hsl(0, 0%, 98%)'
+          },
+          '100%': {
+            'background-color': 'hsl(235, 21%, 11%)'
+          }
+        },
+        darkToLight: {
+          '0%': {
+            'background-color': 'hsl(235, 21%, 11%)'            
+          },
+          '100%': {
+            'background-color': 'hsl(0, 0%, 98%)'
+          }
+        }
+      }
     },
 
   },
