@@ -21,14 +21,16 @@ export default function Background() {
     useState(window.innerWidth);
 
   useEffect(() => {
+    const updateWindowWidth = () => setWindowWidth(window.innerWidth);
+
     window.addEventListener(
       'resize',
-      () => setWindowWidth(window.innerWidth)
+      updateWindowWidth
     );
     return () => {
       window.removeEventListener(
         'resize',
-        () => setWindowWidth(window.innerWidth)
+        updateWindowWidth
       )
     }
   });
