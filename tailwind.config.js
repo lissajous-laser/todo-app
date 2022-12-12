@@ -49,7 +49,7 @@ module.exports = {
         },
         darkToLight: {
           '0%': {
-            'background-color': 'hs l(235, 21%, 11%)'            
+            'background-color': 'hsl(235, 21%, 11%)'            
           },
           '100%': {
             'background-color': 'hsl(0, 0%, 98%)'

@@ -67,7 +67,7 @@ export default function Background() {
           animate-darkToLight dark:animate-lightToDark"
         style={{fontFamily: 'Josefin Sans'}}
       >
-        <main 
+        <main
           className=" w-full flex justify-center no bg-no-repeat"
           {...backgroundStyle()}
         >

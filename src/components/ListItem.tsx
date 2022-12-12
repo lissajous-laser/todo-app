@@ -10,6 +10,7 @@ const TABLET_BREAK_POINT = 960;
 // Renders list items, competed buttons and delete buttons.
 export default function ListItem(props: {task: Task, windowWidth: number}) {
   const dispatch = useDispatch();
+  // State of if component is hovered over by mouse.
   const [hover, setHover] = useState(false);
 
   function buttonStyle(task: Task) {
@@ -62,6 +63,7 @@ export default function ListItem(props: {task: Task, windowWidth: number}) {
         id={String(props.task.id)}
         onClick={() => dispatch(toggleComplete(props.task))}
         {...buttonStyle(props.task)}
+        aria-label="Toggle completed"
       >
         <div {...buttonMaskStyle(props.task)}></div>
         {props.task.isComplete && <img className="absolute left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4"  src={checkIcon} alt="check mark"/>}
@@ -72,7 +74,11 @@ export default function ListItem(props: {task: Task, windowWidth: number}) {
       >
         {props.task.text}
       </label>
-      {(hover || props.windowWidth < TABLET_BREAK_POINT) && <button onClick={() => dispatch(deleteTodo(props.task))} ><img className="w-3 h-3 sm:w-fit sm:h-fit" src={crossIcon} alt="cross"/></button>}
+      {(hover || props.windowWidth < TABLET_BREAK_POINT) && 
+        <button onClick={() => dispatch(deleteTodo(props.task))} >
+          <img className="w-3 h-3 sm:w-fit sm:h-fit" src={crossIcon} alt="cross"/>
+        </button>
+      }
     </li>
   );
 }

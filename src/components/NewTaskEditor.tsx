@@ -64,6 +64,7 @@ export default function NewTaskEditor() {
     <button
       {...buttonStyle(newTask)}
       onClick={() => dispatch(toggleCompleteNewTask())}
+      aria-label="Toggle completed"
     >
       <div {...buttonMaskStyle(newTask)}></div>
       {newTask.isComplete && <img
